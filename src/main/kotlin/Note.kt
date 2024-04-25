@@ -1,3 +1,3 @@
-class Note(
-    name: String,
-    val text: String): Date(name)
+data class Note(
+    val name: String,
+    val text: String)

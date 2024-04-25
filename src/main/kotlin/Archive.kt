@@ -1,5 +1,3 @@
-class Archive(
-    name: String,
-    val notes: MutableList<Note>): Date(name) {
-
-}
+data class Archive(
+    val name: String,
+    val notes: MutableList<Note>)

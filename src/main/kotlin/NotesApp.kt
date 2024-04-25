@@ -3,21 +3,25 @@ import java.util.Scanner
 
 class NotesApp {
 
-    val archives: MutableList<Archive> = mutableListOf()
-    val notes: MutableList<Note> = mutableListOf()
-    private val scanner = Scanner(System.`in`)
+    val archiveList: MutableList<Archive> = mutableListOf()
+    val noteList: MutableList<Note> = mutableListOf()
+    val scanner = Scanner(System.`in`)
 
     fun start(){
-        val mainMenu = Menu("Список архивов", archives)
-
+        val mainMenu = ArchivesListMenu("Список архивов", scanner, archiveList)
         mainMenu.displayMenu()
 
+
+
+        return
     }
 
-    private fun readIntInput(prompt: String, max: Int): Int {
+
+
+    private fun readIntInput(max: Int): Int {
         var input: Int
         while (true) {
-            print(prompt)
+            println("Введите номер пункта:")
             try {
                 input = scanner.nextInt()
                 if (input in 0..max) {
