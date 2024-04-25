@@ -3,8 +3,8 @@ import java.util.Scanner
 class ArchivesListMenu(name: String, scanner: Scanner, val items: MutableList<Archive>): Menu(name, scanner) {
 
     fun selectItem(){
+        var select: Int
         if (items.isNotEmpty()){
-            var select: Int
             do {
                 select = readIntInput(items.size+1)
                 when(select){
@@ -13,21 +13,20 @@ class ArchivesListMenu(name: String, scanner: Scanner, val items: MutableList<Ar
                         val archive = items[select-1]
                         val notesList = NotesListMenu("Список заметок в архиве:", scanner, archive.notes)
                         notesList.printMenu(notesList.items)
-                        notesList.selectMenu()
-                        this.printMenu(items)
-
-
-                            }
-                            "Note" -> {
-                                val note = list[select - 1] as Note
-                                showNote(note)
-                                updateMenu(parentMenu)
-                            }
-                        }
+                        notesList.selectItem()
                     }
                 }
-
-            } while (select != (list.size + 1))
+            } while (select != (items.size + 1))
+        } else {
+            select = readIntInput(1)
+            when(select){
+                0 -> addItem(items)
+                1 -> return
+            }
         }
+        this.printMenu(items)
+        this.selectItem()
+        return
     }
 }
+
