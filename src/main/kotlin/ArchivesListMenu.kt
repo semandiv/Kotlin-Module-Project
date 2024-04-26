@@ -2,31 +2,28 @@ import java.util.Scanner
 
 class ArchivesListMenu(name: String, scanner: Scanner, val items: MutableList<Archive>): Menu(name, scanner) {
 
-    fun selectItem(){
+    //собственная функция класса-наследника для меню со списком архивов
+    //в цикле выводим меню на экран и потом запрашиваем ввод пункта меню
+    //после выполнения действия пункта меню (кроме выхода) происходит перерисовка меню с новыми пунктами
+    fun start(){
         var select: Int
-        if (items.isNotEmpty()){
-            do {
-                select = readIntInput(items.size+1)
-                when(select){
+        do {
+            this.printMenu(items)
+            select = readIntInput(items.size + 1)
+            if (items.isNotEmpty()){
+                when (select) {
                     0 -> addItem(items)
                     in 1..items.size -> {
-                        val archive = items[select-1]
-                        val notesList = NotesListMenu("Список заметок в архиве:", scanner, archive.notes)
-                        notesList.printMenu(notesList.items)
-                        notesList.selectItem()
+                        val archive = items[select - 1]
+                        val notesList =
+                            NotesListMenu("Список заметок в архиве:", scanner, archive.notes)
+                        notesList.start()
                     }
                 }
-            } while (select != (items.size + 1))
-        } else {
-            select = readIntInput(1)
-            when(select){
-                0 -> addItem(items)
-                1 -> return
+            } else {
+                if (select == 0) this.addItem(items)
             }
-        }
-        this.printMenu(items)
-        this.selectItem()
-        return
+        } while (select != items.size + 1)
     }
 }
 

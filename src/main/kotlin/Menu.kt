@@ -2,6 +2,8 @@ import java.util.InputMismatchException
 import java.util.Scanner
 
 open class Menu(val name: String, val scanner: Scanner) {
+
+    //дженерик-метод, добавляет новый объект в список
     inline fun <reified T> addItem(list: MutableList<T>){
         when (T::class.qualifiedName){
             "Archive" -> {
@@ -17,6 +19,7 @@ open class Menu(val name: String, val scanner: Scanner) {
             }
         }
     }
+    //дженерик-метод, собирает из списка пункты меню и отображает на экране
     inline fun <reified T> printMenu(list: MutableList<T>) {
         println(this.name)
         println("0. Добавить новый элемент")
@@ -32,11 +35,14 @@ open class Menu(val name: String, val scanner: Scanner) {
                         println("${index + 1}. ${note.name}")
                     }
                 }
-                println("${list.size + 1}. Выход")
+
             }
+            println("${list.size + 1}. Выход")
         } else println("1. Выход")
     }
 
+    //выводит на экран заметку с названием и содержимым
+    //задумывал, если будет время, сделать текст заметок многострочным, но не успеваю уже((
     fun showNote(note: Note){
         println("Заметка ${note.name}")
         println(note.text)
@@ -57,6 +63,9 @@ open class Menu(val name: String, val scanner: Scanner) {
             }
         }
     }
+
+    //метод для чтения строк с клавиатуры
+    //используется для указания названий для архивов, заметок и текстов заметок
     fun readStringInput(message: String): String {
         var input: String
         println(message)
@@ -66,6 +75,9 @@ open class Menu(val name: String, val scanner: Scanner) {
 
         return input
     }
+
+    //метод для чтения целых чисел с клавиатуры для выбора пункта меню
+    //в нем проверяем, что введенное число есть в меню на экране
     fun readIntInput(max: Int): Int {
         var input: Int
         while (true) {
